@@ -1,5 +1,7 @@
 package kr.or.ddit.basic;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -34,27 +36,44 @@ public class FileCopyTestTeacherVer {
 		FileInputStream fin = null;
 		FileOutputStream fout = null;
 		
+		// 버퍼스트림 객체 선언
+		BufferedInputStream bin = null;
+		BufferedOutputStream bout = null;
+		
 		try {
 			// 원본 파일을 읽어올 입력용 스트림 객체 생성
 			
 			fin = new FileInputStream(file);
+			bin = new BufferedInputStream(fin);
 			
 			// 복사될 대상 파일에 출력할 출력용 스트림 객체 생성
 			fout = new FileOutputStream("C:/work_ts/D_Other/연습용/복사본_스폰지밥.png");
+			bout = new BufferedOutputStream(fout);
+			
 			
 			System.out.println("복사 작업 시작...");
 			
 			int data;		// 읽어온 데이터가 저장될 변수 선언
+			/*
 			while((data=fin.read())!=-1) {
 				fout.write(data);
 			}
+			*/
+			
+			while((data=bin.read())!=-1) {
+				bout.write(data);
+			}
+			
 			System.out.println("복사 작업 완료...");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if(fin!=null) try {fin.close();} catch(IOException e){}
-			if(fout!=null) try {fout.close();} catch(IOException e){}
+//			if(fin!=null) try {fin.close();} catch(IOException e){}
+//			if(fout!=null) try {fout.close();} catch(IOException e){}
+			
+			if(bin!=null) try {bin.close();} catch(IOException e){}
+			if(bout!=null) try {bout.close();} catch(IOException e){}
 		}
 
 	}
